@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/widgets.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -43,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> fetchDocumentCount() async {
     try {
       log("fetching");
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('names').get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('names').get();
       log('Total documents in "users" collection: ${querySnapshot.docs.length}');
       setState(() {
         docs = querySnapshot.docs.length;
@@ -67,7 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
       child: GestureDetector(
         onTap: () => fetchDocumentCount,
-        child: Container(height: 100, width: 100, color: Colors.red, child: Text(docs.toString())),
+        child: Container(
+            height: 100,
+            width: 100,
+            color: Colors.red,
+            child: Text(docs.toString())),
       ),
     ));
   }

@@ -34,6 +34,7 @@ class AuthRepository extends ConsumerStatefulWidget {
       userModel = UserModel(
           id: creds.user!.uid,
           name: name,
+          isNewUser: true,
           email: email.toString(),
           about: '',
           image:
@@ -140,7 +141,7 @@ class AuthRepository extends ConsumerStatefulWidget {
     return snapshot;
   }
 
-  Future<Either> signInWithGoogle(Ref ref) async {
+  Future<Either<Failure, UserModel>> signInWithGoogle(Ref ref) async {
     try {
       log("Entered in Google sign in function");
       // Assumed _googleSignIn and _auth are initialized
@@ -180,6 +181,7 @@ class AuthRepository extends ConsumerStatefulWidget {
               image:
                   'https://firebasestorage.googleapis.com/v0/b/while-2.appspot.com/o/profile_pictures%2FKIHEXrUQrzcWT7aw15E2ho6BNhc2.jpg?alt=media&token=1316edc6-b215-4655-ae0d-20df15555e34',
               createdAt: time,
+              isNewUser: true,
               pushToken: '',
               dateOfBirth: '',
               gender: '',
@@ -242,15 +244,6 @@ class AuthRepository extends ConsumerStatefulWidget {
     UserDataProvider userDataProvider =
         UserDataProvider(_ref); // Create an instance
     UserModel user = userDataProvider.userData!;
-
-    // if (user.id == null || user.id == '') {
-    //   final docRef = _firestore.collection("users").doc(uid);
-    //   docRef.get().then((DocumentSnapshot doc) {
-    //     final data = doc.data() as Map<String, dynamic>;
-    //     user = ChatUser.fromJson(data);
-    //     userDataProvider.setUserData(user);
-    //   });
-    // }
     return user;
   }
 

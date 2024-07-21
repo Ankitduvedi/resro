@@ -40,11 +40,12 @@ class AuthController extends StateNotifier<bool> {
     final user = await _authRepository.signInWithGoogle(_ref);
     state = false;
     log("setting user data to userProv");
+
     user.fold((l) => Utils.snackBar(l.message, context), (r) {
       _ref
           .watch(apisProvider)
           .getFirebaseMessagingToken(FirebaseAuth.instance.currentUser!.uid);
-      context.push('/');
+      context.push(r.isNewUser ? '/' : '/setupHotelScreen');
     });
   }
 

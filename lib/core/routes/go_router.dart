@@ -4,6 +4,8 @@ import 'package:reso/feature/auth/screens/login_screen.dart';
 import 'package:reso/feature/home/screens/home_screen.dart';
 import 'package:reso/feature/home/screens/scaffold_with_navbar.dart';
 import 'package:reso/feature/splas_screen/splash_view.dart';
+import 'package:reso/feature/welcome_screen/screen/setup_hotel.dart';
+import 'package:reso/feature/welcome_screen/screen/welcome_screen.dart';
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -22,14 +24,14 @@ final goRouter = GoRouter(
       path: '/loginScreen',
       builder: (context, state) => const LoginScreen(),
     ),
-    // GoRoute(
-    //   path: '/signUpScreen',
-    //   builder: (context, state) => const SignUpScreen(),
-    // ),
-    // GoRoute(
-    //   path: '/forgotPasswordScreen',
-    //   builder: (context, state) => const ForgotPasswordPage(),
-    // ),
+    GoRoute(
+      path: '/welcomeScreen',
+      builder: (context, state) => const WelcomeScreen(),
+    ),
+    GoRoute(
+      path: '/setupHotelScreen',
+      builder: (context, state) => const SetupHotelScreen(),
+    ),
     // GoRoute(
     //     path: '/onBoardingScreens',
     //     builder: (context, state) => const OnBoardingScreen(),

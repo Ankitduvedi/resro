@@ -14,6 +14,7 @@ class UserModel {
     required this.designation,
     required this.isApproved,
     required this.tourPage,
+    required this.isNewUser,
   });
 
   late String image;
@@ -26,7 +27,7 @@ class UserModel {
   late String phoneNumber;
   late String dateOfBirth;
   late String gender;
-
+  late bool isNewUser;
   late String place;
   late String designation;
   late int isApproved;
@@ -47,7 +48,7 @@ class UserModel {
     place = json['place'] ?? '';
     designation = json['designation'] ?? '';
     isApproved = json['isApproved'] ?? 0;
-
+    isNewUser = json['isNewUser'] ?? false;
     tourPage = json['tourPage'] ?? "";
     // Add the new field
   }
@@ -69,6 +70,8 @@ class UserModel {
     data['designation'] = designation;
     data['isApproved'] = isApproved;
     data['tourPage'] = tourPage;
+    data['isNewUser'] = isNewUser;
+
     // Add the new field
     return data;
   }
@@ -87,6 +90,7 @@ class UserModel {
       'gender': gender,
       'phoneNumber': phoneNumber,
       'place': place,
+      'isNewUser': isNewUser,
 
       'designation': designation,
       // Add the new field
@@ -99,6 +103,7 @@ class UserModel {
   // If you have a factory constructor for creating an empty object, make sure to include the new field there as well
   factory UserModel.empty() {
     return UserModel(
+        isNewUser: false,
         image: '',
         about: '',
         name: '',
@@ -130,8 +135,10 @@ class UserModel {
     String? place,
     String? designation,
     int? isApproved,
+    bool? isNewUser,
   }) {
     return UserModel(
+        isNewUser: isNewUser ?? this.isNewUser,
         image: image ?? this.image,
         about: about ?? this.about,
         name: name ?? this.name,

@@ -43,7 +43,7 @@ class SplashController extends StateNotifier<bool> {
           context.push('/');
           return;
         } else if (r == 3) {
-          context.push('/loginScreen');
+          context.push('/welcomeScreen');
           return;
         }
       },

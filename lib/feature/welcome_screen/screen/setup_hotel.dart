@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class SetupHotelScreen extends StatelessWidget {
+class SetupHotelScreen extends ConsumerStatefulWidget {
   const SetupHotelScreen({super.key});
+
+  @override
+  ConsumerState<SetupHotelScreen> createState() => _SetupHotelScreenState();
+}
+
+class _SetupHotelScreenState extends ConsumerState<SetupHotelScreen> {
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +45,28 @@ class SetupHotelScreen extends StatelessWidget {
                 color: Colors.white70,
               ),
               textAlign: TextAlign.center,
+            ),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter an email address';
+                } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                    .hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null; // Return null if the input is valid
+              },
+              decoration: InputDecoration(
+                labelText: 'Enter Email',
+                labelStyle: GoogleFonts.ptSans(),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 20.0),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+              ),
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
             ),
             const SizedBox(height: 32),
             // Image.asset(

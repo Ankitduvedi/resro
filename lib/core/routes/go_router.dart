@@ -4,6 +4,7 @@ import 'package:reso/feature/auth/screens/login_screen.dart';
 import 'package:reso/feature/home/screens/home_screen.dart';
 import 'package:reso/feature/home/screens/scaffold_with_navbar.dart';
 import 'package:reso/feature/splas_screen/splash_view.dart';
+import 'package:reso/feature/welcome_screen/screen/hotel_home_screen.dart';
 import 'package:reso/feature/welcome_screen/screen/setup_hotel.dart';
 import 'package:reso/feature/welcome_screen/screen/welcome_screen.dart';
 
@@ -67,19 +68,19 @@ final goRouter = GoRouter(
             path: '/',
             builder: (context, state) => const HomeScreen(),
           ),
-          // GoRoute(
-          //     path: '/creatorScreen/:user',
-          //     builder: (context, state) {
-          //       return const CreateScreen();
-          //     }),
-          // GoRoute(
-          //   path: '/reelsScreen',
-          //   builder: (context, state) => const ComingSoonPage(),
-          // ),
-          // GoRoute(
-          //   path: '/socials',
-          //   builder: (context, state) => const SocialScreen(),
-          // ),
+          GoRoute(
+              path: '/creatorScreen/:user',
+              builder: (context, state) {
+                return const HotelScreen();
+              }),
+          GoRoute(
+            path: '/setupHotelScreen',
+            builder: (context, state) => const SetupHotelScreen(),
+          ),
+          GoRoute(
+            path: '/socials',
+            builder: (context, state) => const SetupHotelScreen(),
+          ),
           // GoRoute(
           //   path: '/account',
           //   builder: (context, state) => const ProfileScreen(),

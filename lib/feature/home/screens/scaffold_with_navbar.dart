@@ -26,7 +26,7 @@ class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar>
       case 1:
         GoRouter.of(context).go('/creatorScreen/:user');
       case 2:
-        GoRouter.of(context).go('/reelsScreen');
+        GoRouter.of(context).go('/setupHotelScreen');
       case 3:
         GoRouter.of(context).go('/socials');
       case 4:
@@ -112,7 +112,6 @@ class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar>
   @override
   Widget build(BuildContext context) {
     ref.watch(userDataProvider).userData!;
-
     return Scaffold(
       body: SafeArea(bottom: false, child: widget.childScreen),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -154,12 +153,15 @@ class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar>
               ),
             ),
             Tab(
-                // key: playKey,
-                icon: Image.asset(
-              'assets/while_icon.png',
-              width: 70,
-              height: 27, // Dynamic width for the image
-            )),
+              // key: playKey,
+              icon: Icon(
+                _controller!.index == 2
+                    ? FluentIcons.home_20_filled
+                    : FluentIcons.home_20_regular,
+                size: 30,
+                color: !blackColor ? Colors.black : Colors.white,
+              ),
+            ),
             Tab(
               // key: chatKey,
               icon: Icon(

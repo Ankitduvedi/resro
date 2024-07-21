@@ -45,7 +45,8 @@ class AuthController extends StateNotifier<bool> {
       _ref
           .watch(apisProvider)
           .getFirebaseMessagingToken(FirebaseAuth.instance.currentUser!.uid);
-      context.push(r.isNewUser ? '/' : '/setupHotelScreen');
+
+      context.push('/');
     });
   }
 

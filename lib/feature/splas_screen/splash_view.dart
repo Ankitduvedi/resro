@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reso/feature/splas_screen/animation/splash_animation.dart';
 import 'package:reso/feature/splas_screen/controller/splash_controller.dart';
+import 'package:reso/providers/user_data_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -97,6 +98,7 @@ class SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    ref.read(userDataProvider).userData;
     return Scaffold(
       body: Stack(
         children: [

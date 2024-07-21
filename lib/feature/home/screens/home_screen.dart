@@ -12,10 +12,11 @@ class HomeScreen extends ConsumerStatefulWidget {
 class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userDataProvider).userData!;
     return TextButton(
         onPressed: () {
           ref.read(authControllerProvider.notifier).signOut(context);
         },
-        child: const Text('Logout'));
+        child: Text('Logout ${user.name}'));
   }
 }

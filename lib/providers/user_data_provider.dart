@@ -10,8 +10,6 @@ import 'package:reso/data/model/user_model.dart';
 class UserDataProvider with ChangeNotifier {
   final Ref ref;
   late final StreamSubscription<DocumentSnapshot> _userSubscription;
-  late final StreamSubscription<QuerySnapshot> _followingSubscription;
-  late final StreamSubscription<QuerySnapshot> _followerSubscription;
   bool _isDisposed = false;
 
   UserDataProvider(this.ref) {
@@ -32,22 +30,6 @@ class UserDataProvider with ChangeNotifier {
           .listen((snapshot) {
         _userUpdateListener(snapshot);
       });
-
-      // Following subscription
-      // _followingSubscription = FirebaseFirestore.instance
-      //     .collection('users')
-      //     .doc(auth.uid)
-      //     .collection('following')
-      //     .snapshots()
-      //     .listen(_followingUpdateListener);
-
-      // Follower subscription
-      // _followerSubscription = FirebaseFirestore.instance
-      //     .collection('users')
-      //     .doc(auth.uid)
-      //     .collection('follower')
-      //     .snapshots()
-      //     .listen(_followerUpdateListener);
     }
   }
 
@@ -58,30 +40,6 @@ class UserDataProvider with ChangeNotifier {
     }
   }
 
-  // void _followingUpdateListener(QuerySnapshot snapshot) {
-  //   if (!_isDisposed) {
-  //     int newFollowingCount = snapshot.docs.length;
-  //     if (_userData.following != newFollowingCount) {
-  //       _userData.following = newFollowingCount;
-  //       _safeNotifyListeners();
-  //       updateUserData(
-  //           _userData); // Call updateUserData when following count changes
-  //     }
-  //   }
-  // }
-
-  // void _followerUpdateListener(QuerySnapshot snapshot) {
-  //   if (!_isDisposed) {
-  //     int newFollowerCount = snapshot.docs.length;
-  //     if (_userData.follower != newFollowerCount) {
-  //       _userData.follower = newFollowerCount;
-  //       _safeNotifyListeners();
-  //       updateUserData(
-  //           _userData); // Call updateUserData when following count changes
-  //     }
-  //   }
-  // }
-
   void _safeNotifyListeners() {
     if (!_isDisposed) notifyListeners();
   }
@@ -90,8 +48,6 @@ class UserDataProvider with ChangeNotifier {
   void dispose() {
     _isDisposed = true;
     _userSubscription.cancel();
-    _followingSubscription.cancel();
-    _followerSubscription.cancel();
     super.dispose();
   }
 

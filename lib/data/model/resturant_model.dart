@@ -1,5 +1,5 @@
-class Resturant {
-  Resturant({
+class Restaurant {
+  Restaurant({
     required this.image,
     required this.about,
     required this.name,
@@ -14,6 +14,7 @@ class Resturant {
     required this.isApproved,
     required this.tourPage,
     required this.isNewUser,
+    required this.ownerId,
   });
 
   late String image;
@@ -21,6 +22,7 @@ class Resturant {
   late String name;
   late String createdAt;
   late String id;
+  late String ownerId;
   late String email;
   late String pushToken;
   late String phoneNumber;
@@ -32,12 +34,14 @@ class Resturant {
   late String tourPage = "";
 
   // Update fromJson method to include the new field
-  Resturant.fromJson(Map<String, dynamic> json) {
+  Restaurant.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
     about = json['about'] ?? '';
     name = json['name'] ?? '';
     createdAt = json['created_at'] ?? '';
     id = json['id'] ?? '';
+    ownerId = json['ownerId'] ?? '';
+
     email = json['email'] ?? '';
     pushToken = json['push_token'] ?? '';
     phoneNumber = json['phoneNumber'] ?? '';
@@ -58,6 +62,7 @@ class Resturant {
     data['name'] = name;
     data['created_at'] = createdAt;
     data['id'] = id;
+    data['ownerId'] = ownerId;
     data['email'] = email;
     data['push_token'] = pushToken;
     data['phoneNumber'] = phoneNumber;
@@ -80,6 +85,7 @@ class Resturant {
       'name': name,
       'createdAt': createdAt,
       'id': id,
+      'ownerId': ownerId,
       'email': email,
       'pushToken': pushToken,
       'seats': seats,
@@ -96,14 +102,15 @@ class Resturant {
   }
 
   // If you have a factory constructor for creating an empty object, make sure to include the new field there as well
-  factory Resturant.empty() {
-    return Resturant(
+  factory Restaurant.empty() {
+    return Restaurant(
         isNewUser: false,
         image: '',
         about: '',
         name: '',
         createdAt: '',
         id: '',
+        ownerId: '',
         email: '',
         pushToken: '',
         seats: 0,
@@ -115,12 +122,13 @@ class Resturant {
   }
 
   // Add a copyWith method
-  Resturant copyWith({
+  Restaurant copyWith({
     String? image,
     String? about,
     String? name,
     String? createdAt,
     String? id,
+    String? ownerId,
     String? email,
     String? pushToken,
     String? phoneNumber,
@@ -131,13 +139,14 @@ class Resturant {
     int? isApproved,
     bool? isNewUser,
   }) {
-    return Resturant(
+    return Restaurant(
         isNewUser: isNewUser ?? this.isNewUser,
         image: image ?? this.image,
         about: about ?? this.about,
         name: name ?? this.name,
         createdAt: createdAt ?? this.createdAt,
         id: id ?? this.id,
+        ownerId: ownerId ?? this.ownerId,
         email: email ?? this.email,
         pushToken: pushToken ?? this.pushToken,
         phoneNumber: phoneNumber ?? this.phoneNumber,

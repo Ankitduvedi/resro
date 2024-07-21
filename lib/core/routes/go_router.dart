@@ -1,5 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:reso/core/routes/navigation_const.dart';
+import 'package:reso/feature/auth/screens/login_screen.dart';
+import 'package:reso/feature/home/screens/home_screen.dart';
+import 'package:reso/feature/home/screens/scaffold_with_navbar.dart';
 import 'package:reso/feature/splas_screen/splash_view.dart';
 
 final goRouter = GoRouter(
@@ -15,10 +18,10 @@ final goRouter = GoRouter(
     //   path: '/updateAppScreen',
     //   builder: (context, state) => const UpdateAppScreen(),
     // ),
-    // GoRoute(
-    //   path: '/loginScreen',
-    //   builder: (context, state) => const LoginScreen(),
-    // ),
+    GoRoute(
+      path: '/loginScreen',
+      builder: (context, state) => const LoginScreen(),
+    ),
     // GoRoute(
     //   path: '/signUpScreen',
     //   builder: (context, state) => const SignUpScreen(),
@@ -52,33 +55,33 @@ final goRouter = GoRouter(
     //         builder: (context, state) => const IntroPage5(),
     //       ),
     //     ]),
-    // ShellRoute(
-    //     navigatorKey: NavigationService.shellNavigatorKey,
-    //     builder: (context, state, child) => ScaffoldWithNavBar(
-    //           childScreen: child,
-    //         ),
-    //     routes: [
-    //       GoRoute(
-    //         path: '/',
-    //         builder: (context, state) => const FeedScreen(),
-    //       ),
-    //       GoRoute(
-    //           path: '/creatorScreen/:user',
-    //           builder: (context, state) {
-    //             return const CreateScreen();
-    //           }),
-    //       GoRoute(
-    //         path: '/reelsScreen',
-    //         builder: (context, state) => const ComingSoonPage(),
-    //       ),
-    //       GoRoute(
-    //         path: '/socials',
-    //         builder: (context, state) => const SocialScreen(),
-    //       ),
-    //       GoRoute(
-    //         path: '/account',
-    //         builder: (context, state) => const ProfileScreen(),
-    //       )
-    //     ]),
+    ShellRoute(
+        navigatorKey: NavigationService.shellNavigatorKey,
+        builder: (context, state, child) => ScaffoldWithNavBar(
+              childScreen: child,
+            ),
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => const HomeScreen(),
+          ),
+          // GoRoute(
+          //     path: '/creatorScreen/:user',
+          //     builder: (context, state) {
+          //       return const CreateScreen();
+          //     }),
+          // GoRoute(
+          //   path: '/reelsScreen',
+          //   builder: (context, state) => const ComingSoonPage(),
+          // ),
+          // GoRoute(
+          //   path: '/socials',
+          //   builder: (context, state) => const SocialScreen(),
+          // ),
+          // GoRoute(
+          //   path: '/account',
+          //   builder: (context, state) => const ProfileScreen(),
+          // )
+        ]),
   ],
 );

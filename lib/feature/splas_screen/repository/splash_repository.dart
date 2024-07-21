@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -61,23 +62,24 @@ class SplashRepository {
 
   Future<Either<Failure, int>> checkCondition() async {
     try {
-      final tempaccessToken =
-          await SecureStorage().getUserAccessToken('tempAccessToken');
+      // final tempaccessToken =
+      //     await SecureStorage().getUserAccessToken('tempAccessToken');
 
-      if (tempaccessToken != 'onboarded') {
-        SecureStorage().setUserAccessToken('tempAccessToken', 'onboarded');
-        return right(1);
+      // if (tempaccessToken != 'onboarded') {
+      //   SecureStorage().setUserAccessToken('tempAccessToken', 'onboarded');
+      //   return right(1);
+      // } else {
+      final accessToken =
+          await SecureStorage().getUserAccessToken('accessToken');
+      if (accessToken != '') {
+        //_ref.read(userDataProvider).userData;
+        return right(2);
       } else {
-        final accessToken =
-            await SecureStorage().getUserAccessToken('accessToken');
-        if (accessToken != '') {
-          //_ref.read(userDataProvider).userData;
-          return right(2);
-        } else {
-          return right(3);
-        }
+        return right(3);
       }
+      //}
     } catch (e) {
+      log(e.toString());
       return left(Failure(message: e.toString()));
     }
   }

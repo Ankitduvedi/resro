@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:go_router/go_router.dart';
 import 'package:reso/core/utils/utils.dart';
 import 'package:reso/data/model/user_model.dart';
-import 'package:reso/feature/auth/repository/firebase_repository.dart';
+import 'package:reso/feature/auth/repository/auth_repository.dart';
 import 'package:reso/providers/api_provider.dart';
 
 final authControllerProvider =
@@ -55,7 +55,7 @@ class AuthController extends StateNotifier<bool> {
     final response = await _authRepository.signout();
     state = false;
     response.fold((l) => Utils.snackBar(l.message, context), (r) {
-      context.pushReplacement('/loginScreen');
+      context.pushReplacement('/welcomeScreen');
       null;
     });
   }

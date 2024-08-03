@@ -29,25 +29,24 @@ class Dish {
   late String subCategory;
   late List<String> tags;
 
-  // Update fromJson method to include the new field
+  // Updated fromJson method to include type conversion for lists
   Dish.fromJson(Map<String, dynamic> json) {
-    images = json['images'] ?? [];
+    images = List<String>.from(json['images'] ?? []);
     description = json['description'] ?? '';
     name = json['name'] ?? '';
     createdAt = json['created_at'] ?? '';
     id = json['id'] ?? '';
     cookingTime = json['cookingTime'] ?? '';
-    quantity = json['push_token'] ?? '';
+    quantity = json['quantity'] ?? '';
     discount = json['discount'] ?? '';
     ratings = json['ratings'] ?? '';
     price = json['price'] ?? '';
     category = json['category'] ?? '';
-    tags = json['tags'] ?? [];
+    tags = List<String>.from(json['tags'] ?? []);
     subCategory = json['subCategory'] ?? "";
-    // Add the new field
   }
 
-  // Update toJson method to include the new field
+  // Updated toJson method to include the new field
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['images'] = images;
@@ -56,19 +55,16 @@ class Dish {
     data['created_at'] = createdAt;
     data['id'] = id;
     data['cookingTime'] = cookingTime;
-    data['push_token'] = quantity;
+    data['quantity'] = quantity;
     data['discount'] = discount;
     data['ratings'] = ratings;
     data['price'] = price;
     data['category'] = category;
     data['subCategory'] = subCategory;
     data['tags'] = tags;
-
-    // Add the new field
     return data;
   }
 
-  // Similarly, update the toMap method if needed
   Map<String, dynamic> toMap() {
     return {
       'images': images,
@@ -83,29 +79,28 @@ class Dish {
       'price': price,
       'tags': tags,
       'category': category,
-      'subCategory': subCategory
+      'subCategory': subCategory,
     };
   }
 
-  // If you have a factory constructor for creating an empty object, make sure to include the new field there as well
   factory Dish.empty() {
     return Dish(
-        tags: [],
-        images: [],
-        description: 'Hey everyone',
-        name: '',
-        createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
-        id: '',
-        cookingTime: '',
-        quantity: '',
-        discount: '',
-        ratings: '',
-        price: '',
-        category: '',
-        subCategory: "");
+      tags: [],
+      images: [],
+      description: 'Hey everyone',
+      name: '',
+      createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: '',
+      cookingTime: '',
+      quantity: '',
+      discount: '',
+      ratings: '',
+      price: '',
+      category: '',
+      subCategory: "",
+    );
   }
 
-  // Add a copyWith method
   Dish copyWith({
     List<String>? images,
     String? description,
@@ -114,27 +109,27 @@ class Dish {
     String? id,
     String? cookingTime,
     String? quantity,
-    String? phoneNumber,
     String? discount,
     String? ratings,
     String? price,
     String? category,
-    int? isApproved,
+    String? subCategory,
     List<String>? tags,
   }) {
     return Dish(
-        tags: tags ?? this.tags,
-        images: images ?? this.images,
-        description: description ?? this.description,
-        name: name ?? this.name,
-        createdAt: createdAt ?? this.createdAt,
-        id: id ?? this.id,
-        cookingTime: cookingTime ?? this.cookingTime,
-        quantity: quantity ?? this.quantity,
-        discount: discount ?? this.discount,
-        ratings: ratings ?? this.ratings,
-        price: price ?? this.price,
-        category: category ?? this.category,
-        subCategory: subCategory);
+      images: images ?? this.images,
+      description: description ?? this.description,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+      id: id ?? this.id,
+      cookingTime: cookingTime ?? this.cookingTime,
+      quantity: quantity ?? this.quantity,
+      discount: discount ?? this.discount,
+      ratings: ratings ?? this.ratings,
+      price: price ?? this.price,
+      category: category ?? this.category,
+      subCategory: subCategory ?? this.subCategory,
+      tags: tags ?? this.tags,
+    );
   }
 }

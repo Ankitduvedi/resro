@@ -8,11 +8,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reso/data/model/dish_model.dart';
 import 'package:reso/feature/hotel/controller/restaurant_controller.dart';
+import 'package:reso/providers/local_storage_data_provider.dart';
 
 class CreateMenuScreen extends ConsumerStatefulWidget {
-  final String restaurantId;
-
-  const CreateMenuScreen({super.key, required this.restaurantId});
+  const CreateMenuScreen({
+    super.key,
+  });
 
   @override
   CreateMenuScreenState createState() => CreateMenuScreenState();
@@ -55,6 +56,7 @@ class CreateMenuScreenState extends ConsumerState<CreateMenuScreen> {
       final createMenuController = ref.read(createMenuControllerProvider);
       await createMenuController.uploadImages(imageFiles).then(
         (value) async {
+          final restaurant = ref.watch(selectedRestaurantProvider)!;
           final List<String> tags = _tagsController.text.split(',');
           final Dish newDish = Dish(
             name: _nameController.text,
@@ -72,7 +74,7 @@ class CreateMenuScreenState extends ConsumerState<CreateMenuScreen> {
             id: '',
           );
           log('list of urls of images $value');
-          await createMenuController.createDish(newDish, widget.restaurantId);
+          await createMenuController.createDish(newDish, restaurant.id);
           //return value;
         },
       );

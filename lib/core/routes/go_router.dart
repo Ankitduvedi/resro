@@ -79,32 +79,26 @@ final goRouter = GoRouter(
             builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
-            path: '/staff',
-            builder: (context, state) {
-              return const StaffHomeScreen();
-            },
-            routes: [
-              // GoRoute(
-              //   path: 'setupHotelScreen',
-              //   builder: (context, state) => const SetupHotelScreen(),
-              // ),
-              GoRoute(
-                path: 'hotelDetailsScreen/:id',
-                builder: (context, state) => HotelDetailsScreen(
-                    restaurantId: state.pathParameters['id']!),
-              ),
-              GoRoute(
-                path: 'createMenuScreen/:restaurantId',
-                builder: (context, state) {
-                  final restaurantId = state.pathParameters['restaurantId']!;
-                  return CreateMenuScreen(restaurantId: restaurantId);
-                },
-              ),
-            ],
+              path: '/staff',
+              builder: (context, state) {
+                return const StaffHomeScreen();
+              }),
+
+          GoRoute(
+            path: '/hotelDetailsScreen/:id',
+            builder: (context, state) =>
+                HotelDetailsScreen(restaurantId: state.pathParameters['id']!),
           ),
           GoRoute(
+            path: '/createMenuScreen',
+            builder: (context, state) {
+              return const CreateMenuScreen();
+            },
+          ),
+
+          GoRoute(
             path: '/menu',
-            builder: (context, state) => MenuScreen(),
+            builder: (context, state) => const MenuScreen(),
           ),
 
           GoRoute(

@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:reso/core/routes/navigation_const.dart';
-import 'package:reso/feature/auth/screens/login_screen.dart';
+import 'package:reso/feature/auth/screens/login_screen_owner.dart';
+import 'package:reso/feature/auth/screens/login_screen_staff.dart';
 import 'package:reso/feature/home/screens/home_screen.dart';
 import 'package:reso/feature/home/screens/home_screen_navbar.dart';
 import 'package:reso/feature/hotel/screen/create_dish.dart';
@@ -32,6 +33,10 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/loginScreen',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/loginScreenStaff',
+      builder: (context, state) => const LoginScreenStaff(),
     ),
 
     GoRoute(

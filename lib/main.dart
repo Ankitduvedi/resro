@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -47,7 +48,13 @@ class MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     // bool isDarkMode =
     //     MediaQuery.of(context).platformBrightness == Brightness.dark;
-    // SystemChrome.setSystemUIOverlayStyle(MyAppThemes.systemUiOverlayStyle);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness:
+            Brightness.dark, // Adjust based on your Scaffold's background color
+      ),
+    );
     return MaterialApp.router(
       themeMode: ThemeMode.light,
       theme: ThemeData.light(),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +11,10 @@ class WelcomeScreen extends StatelessWidget {
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue, Colors.purple],
+            colors: [
+              Color(0xFFFFE5B4),
+              Color(0xFFFF8C42)
+            ], // Warm gradient colors
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -20,62 +24,71 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'Welcome!',
+              'Welcome to Reso!',
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.brown,
+                fontFamily:
+                    'Pacifico', // Use a custom font for a restaurant theme
               ),
             ),
             const SizedBox(height: 16),
             const Text(
-              'We are glad to have you here.',
+              'We are delighted to have you here.',
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.white70,
+                color: Colors.brown,
+                fontFamily: 'PTSans', // Consistent font styling
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            // Image.asset(
-            //   'assets/welcome_image.png', // Add your image in the assets folder
-            //   height: 200,
-            // ),
+            Image.asset(
+              'assets/Welcome.png', // Add your image in the assets folder
+              height: 240,
+              fit: BoxFit.fill,
+            ),
             const SizedBox(height: 32),
-            ElevatedButton(
+            ElevatedButton.icon(
               onPressed: () {
                 // Navigate to owner screen
                 context.push('/loginScreen');
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue,
-                backgroundColor: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.brown,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
+                elevation: 5,
               ),
-              child: const Text(
+              icon: const Icon(Icons.person_4, color: Colors.white),
+              label: const Text(
                 'Continue as Owner',
                 style: TextStyle(fontSize: 18),
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            ElevatedButton.icon(
               onPressed: () {
                 // Navigate to staff screen
+                context.push('/loginScreenStaff');
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue,
-                backgroundColor: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.brown,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
+                elevation: 5,
               ),
-              child: const Text(
+              icon: const Icon(Icons.person, color: Colors.white),
+              label: const Text(
                 'Continue as Staff',
                 style: TextStyle(fontSize: 18),
               ),

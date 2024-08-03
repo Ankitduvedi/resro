@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
 ]);
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return LoginScreenState();
@@ -23,11 +21,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class LoginScreenState extends ConsumerState<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   late GoogleSignInAccount currentUser;
-  bool _obscureText = true; // Initially password is obscure
-  final _formKey = GlobalKey<FormState>();
 
   void handleSignIn(WidgetRef ref) async {
     ref.read(authControllerProvider.notifier).signInWithGoogle(context);
@@ -40,6 +34,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
     final screenSize = MediaQuery.of(context).size;
     final double verticalPadding = screenSize.height * 0.02;
     final isLoading = ref.watch(authControllerProvider);
+
     return Scaffold(
       body: SafeArea(
         child: isLoading
@@ -47,212 +42,78 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
             : SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(screenSize.width * 0.05),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/login_robot.png',
-                          width: screenSize.width *
-                              0.9, // Dynamic width for the image
-                          height: screenSize.height * 0.3,
-                        ), // Placeholder for the image
-                        SizedBox(height: verticalPadding),
-
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter an email address';
-                            } else if (!RegExp(
-                                    r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                                .hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null; // Return null if the input is valid
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Enter Email',
-                            labelStyle: GoogleFonts.ptSans(),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          controller: _emailController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/login_robot.png',
+                        width: screenSize.width * 0.8,
+                        height: screenSize.height * 0.5,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(height: verticalPadding),
+                      Text(
+                        'Welcome to Reso!',
+                        style: GoogleFonts.pacifico(
+                          fontSize: 28,
+                          color: Colors.brown[700],
                         ),
-                        SizedBox(height: verticalPadding),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (password) => password!.length < 8
-                              ? 'Password must be at least 8 characters'
-                              : null,
-                          controller: _passwordController,
-                          obscureText:
-                              _obscureText, // Toggle this boolean to show/hide password
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: GoogleFonts.ptSans(),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                            // Added suffixIcon to toggle password visibility
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Change the icon based on the state of _obscureText
-                                _obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                // Update the state to toggle password visibility
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
-                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: verticalPadding / 2),
+                      Text(
+                        'Login as a Owner',
+                        style: GoogleFonts.ptSans(
+                          fontSize: 18,
+                          color: Colors.brown[500],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: verticalPadding),
+                      ElevatedButton(
+                        onPressed: () {
+                          handleSignIn(ref);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor:
+                              const Color.fromARGB(255, 225, 114, 94),
+                          minimumSize: const Size(double.infinity, 50),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          side: BorderSide(
+                            color: Colors.orange[700]!,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: TextButton(
-                            onPressed: () {
-                              context.push('/forgotPasswordScreen');
-                            },
-                            child: Text(
-                              'Recover Password ?',
-                              style: GoogleFonts.ptSans(color: Colors.grey),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: verticalPadding),
-
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              //ref.read(userProvider.notifier).update((state) => null);
-                              ref
-                                  .read(authControllerProvider.notifier)
-                                  .loginWithEmailAndPassword(
-                                      _emailController.text.toString(),
-                                      _passwordController.text.toString(),
-                                      context);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.blue[800],
-                            backgroundColor:
-                                Colors.white, // Icon color taken from the logo
-                            minimumSize:
-                                const Size(double.infinity, 50), // Button size
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12), // Inner padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  24), // Rounded corners to match logo style
-                              side: BorderSide(
-                                  color: Colors.blue[
-                                      800]!), // Border color taken from the logo
-                            ),
-                            elevation:
-                                0, // No shadow for a flat design similar to the logo
-                          ),
-                          child: Text(
-                            'Sign In',
-                            style: GoogleFonts.ptSans(fontSize: 20),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Don't have an account?"),
-                            TextButton(
-                              onPressed: () {
-                                context.pushReplacement('/signUpScreen');
-                              },
-                              style: TextButton.styleFrom(
-                                minimumSize: const Size(150, 50),
-                              ),
-                              child: Text(
-                                'Sign up',
-                                style: GoogleFonts.ptSans(
-                                  color: Colors
-                                      .blue, // This changes the text color
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-
-                        SizedBox(height: verticalPadding * 1.2),
-                        Row(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            const Expanded(
-                              child: Divider(
-                                thickness:
-                                    1, // Set the thickness of the divider as needed
-                                color: Colors
-                                    .grey, // Set the color of the divider as needed
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                'OR',
-                                style: GoogleFonts.ptSans(),
-                              ),
-                            ),
-                            const Expanded(
-                              child: Divider(
-                                thickness:
-                                    1, // Set the thickness of the divider as needed
-                                color: Colors
-                                    .grey, // Set the color of the divider as needed
-                              ),
+                            Image.asset('assets/google_logo2.png',
+                                width: 30, height: 30),
+                            const SizedBox(width: 20),
+                            Text(
+                              'Login with Google',
+                              style: GoogleFonts.ptSans(fontSize: 20),
                             ),
                           ],
                         ),
-                        SizedBox(height: verticalPadding * 1.4),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            handleSignIn(ref);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.grey[700],
-                            backgroundColor:
-                                Colors.white, // Text and icon color
-                            minimumSize:
-                                const Size(double.infinity, 50), // Button size
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12), // Inner padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(24), // Rounded corners
-                            ),
-                            side: BorderSide(
-                                color: Colors.grey.shade300), // Border color
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize
-                                .min, // Use MainAxisSize.min to keep the row compact
-                            children: <Widget>[
-                              // Image.asset('assets/google_logo2.png',
-                              //     width: 40, height: 40),
-                              const SizedBox(
-                                  width:
-                                      30), // Increase width to increase the distance between the logo and the text
-                              Text('Login with Google',
-                                  style: GoogleFonts.ptSans(fontSize: 20)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                context.go('/welcomeScreen');
+                              },
+                              child: const Text(
+                                'Go back',
+                                style: TextStyle(color: Colors.black),
+                              ))
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),

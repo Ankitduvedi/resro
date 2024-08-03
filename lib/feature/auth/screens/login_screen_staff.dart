@@ -9,33 +9,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:reso/core/utils/loaders/loader.dart';
 import 'package:reso/feature/auth/controller/auth_controller.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
-  'email',
-  'https://www.googleapis.com/auth/contacts.readonly'
-]);
-
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreenStaff extends ConsumerStatefulWidget {
+  const LoginScreenStaff({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return LoginScreenState();
+    return LoginScreenStaffState();
   }
 }
 
-class LoginScreenState extends ConsumerState<LoginScreen> {
+class LoginScreenStaffState extends ConsumerState<LoginScreenStaff> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late GoogleSignInAccount currentUser;
   bool _obscureText = true; // Initially password is obscure
   final _formKey = GlobalKey<FormState>();
 
-  void handleSignIn(WidgetRef ref) async {
-    ref.read(authControllerProvider.notifier).signInWithGoogle(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    log("Login screen");
+    log("Login screen staff");
 
     final screenSize = MediaQuery.of(context).size;
     final double verticalPadding = screenSize.height * 0.02;
@@ -54,9 +45,26 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                         Image.asset(
                           'assets/login_robot.png',
                           width: screenSize.width *
-                              0.9, // Dynamic width for the image
-                          height: screenSize.height * 0.3,
+                              1, // Dynamic width for the image
+                          height: screenSize.height * 0.43,
                         ), // Placeholder for the image
+                        Text(
+                          'Welcome to Reso!',
+                          style: GoogleFonts.pacifico(
+                            fontSize: 28,
+                            color: Colors.brown[700],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: verticalPadding / 2),
+                        Text(
+                          'Login as a Staff',
+                          style: GoogleFonts.ptSans(
+                            fontSize: 18,
+                            color: Colors.brown[500],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                         SizedBox(height: verticalPadding),
 
                         TextFormField(
@@ -116,20 +124,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: TextButton(
-                            onPressed: () {
-                              context.push('/forgotPasswordScreen');
-                            },
-                            child: Text(
-                              'Recover Password ?',
-                              style: GoogleFonts.ptSans(color: Colors.grey),
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 30,
                         ),
-                        SizedBox(height: verticalPadding),
-
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -143,9 +140,9 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.blue[800],
-                            backgroundColor:
-                                Colors.white, // Icon color taken from the logo
+                            foregroundColor: Colors.white,
+                            backgroundColor: const Color.fromARGB(255, 225, 114,
+                                94), // Icon color taken from the logo
                             minimumSize:
                                 const Size(double.infinity, 50), // Button size
                             padding: const EdgeInsets.symmetric(
@@ -154,103 +151,31 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                               borderRadius: BorderRadius.circular(
                                   24), // Rounded corners to match logo style
                               side: BorderSide(
-                                  color: Colors.blue[
-                                      800]!), // Border color taken from the logo
+                                  color: const Color.fromARGB(255, 255, 114,
+                                      94)!), // Border color taken from the logo
                             ),
                             elevation:
                                 0, // No shadow for a flat design similar to the logo
                           ),
                           child: Text(
                             'Sign In',
-                            style: GoogleFonts.ptSans(fontSize: 20),
+                            style: GoogleFonts.ptSans(
+                                fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text("Don't have an account?"),
                             TextButton(
-                              onPressed: () {
-                                context.pushReplacement('/signUpScreen');
-                              },
-                              style: TextButton.styleFrom(
-                                minimumSize: const Size(150, 50),
-                              ),
-                              child: Text(
-                                'Sign up',
-                                style: GoogleFonts.ptSans(
-                                  color: Colors
-                                      .blue, // This changes the text color
-                                ),
-                              ),
-                            )
+                                onPressed: () {
+                                  context.go('/welcomeScreen');
+                                },
+                                child: const Text(
+                                  'Go back',
+                                  style: TextStyle(color: Colors.black),
+                                ))
                           ],
-                        ),
-
-                        SizedBox(height: verticalPadding * 1.2),
-                        Row(
-                          children: <Widget>[
-                            const Expanded(
-                              child: Divider(
-                                thickness:
-                                    1, // Set the thickness of the divider as needed
-                                color: Colors
-                                    .grey, // Set the color of the divider as needed
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                'OR',
-                                style: GoogleFonts.ptSans(),
-                              ),
-                            ),
-                            const Expanded(
-                              child: Divider(
-                                thickness:
-                                    1, // Set the thickness of the divider as needed
-                                color: Colors
-                                    .grey, // Set the color of the divider as needed
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: verticalPadding * 1.4),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            handleSignIn(ref);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.grey[700],
-                            backgroundColor:
-                                Colors.white, // Text and icon color
-                            minimumSize:
-                                const Size(double.infinity, 50), // Button size
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12), // Inner padding
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(24), // Rounded corners
-                            ),
-                            side: BorderSide(
-                                color: Colors.grey.shade300), // Border color
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize
-                                .min, // Use MainAxisSize.min to keep the row compact
-                            children: <Widget>[
-                              // Image.asset('assets/google_logo2.png',
-                              //     width: 40, height: 40),
-                              const SizedBox(
-                                  width:
-                                      30), // Increase width to increase the distance between the logo and the text
-                              Text('Login with Google',
-                                  style: GoogleFonts.ptSans(fontSize: 20)),
-                            ],
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ),

@@ -159,13 +159,13 @@ class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar>
     return Scaffold(
       //backgroundColor: Colors.black,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: restaurant != null
             ? Text(
                 restaurant.name,
                 style: const TextStyle(fontWeight: FontWeight.w600),
               )
             : const CircularProgressIndicator(),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {
@@ -198,11 +198,9 @@ class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar>
           indicatorColor: Colors.transparent,
           onTap: (index) {
             _onItemTapped(index, context);
-            if (index != 2) {
-              setState(() {
-                blackColor = index == 2;
-              });
-            }
+            setState(() {
+              blackColor = index == 2;
+            });
           },
           tabs: [
             Tab(

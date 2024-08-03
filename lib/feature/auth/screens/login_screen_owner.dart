@@ -51,12 +51,12 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        // Image.asset(
-                        //   'assets/while_logo.png',
-                        //   width: screenSize.width *
-                        //       0.9, // Dynamic width for the image
-                        //   height: screenSize.height * 0.3,
-                        // ), // Placeholder for the image
+                        Image.asset(
+                          'assets/login_robot.png',
+                          width: screenSize.width *
+                              0.9, // Dynamic width for the image
+                          height: screenSize.height * 0.3,
+                        ), // Placeholder for the image
                         SizedBox(height: verticalPadding),
 
                         TextFormField(
